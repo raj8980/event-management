@@ -35,5 +35,9 @@ public class EventManagementDAO {
 		String query=" SELECT stateid,state FROM master_state WHERE countryid=? AND xstatus=? ";
 		return genericDAO.executeQueryForList(query, new Object[] {countryId});
 	}
+	public List<Map<String,Object>> getAccessType(){
+		String query="SELECT accesstypeid AS accessTypeID , accesstype AS accessType FROM master_accesstype WHERE xstatus=1";
+		return genericDAO.executeQueryForList(query,new Object[]{})
+	}
 
 }
