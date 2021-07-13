@@ -33,4 +33,8 @@ public class EventManagementService {
 	public List<Map<String,Object>> getStateDtlsByCountry(String countryId) {
 		return eventManagementDAO.getStateDtlsByCountry(countryId);
 	}
+	
+	public List<Map<String,Object>> getAccessType(){
+		return eventManagementDAO.getAccessType();	
+	}
 }
