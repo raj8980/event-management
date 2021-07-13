@@ -39,4 +39,8 @@ public class EventManagementController {
 	private ResponseEntity<Object> getStateDtlsByCountry(@RequestBody String countryId){
 		return ResponseEntity.ok(eventManagementService.getStateDtlsByCountry(countryId));
 	}
+	@PostMapping("access-type")
+	private ResponseEntity<Object> getAccessType(){
+		return ResponseEntity.ok(eventManagementService.getAccessType());
+	}
 }
