@@ -24,58 +24,61 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.util.UrlPathHelper;
+//extends GenericFilter
+public class AuthenticationFilter {
 
-public class AuthenticationFilter extends GenericFilter{
-
-	private static final long serialVersionUID=1L;
-	
-	private AuthenticationManager authenticationManager;
-	
-	public AuthenticationFilter(AuthenticationManager authenticationManager) {
-		this.authenticationManager=authenticationManager;
-	}
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		HttpServletRequest httpServletRequest=(HttpServletRequest) request;
-		HttpServletResponse httpServletResponse=(HttpServletResponse)response;
-		String resourcePath=new UrlPathHelper().getPathWithinApplication(httpServletRequest);
-		try {
-			System.out.println("rp:"+resourcePath);
-			System.out.println("method:"+httpServletRequest.getMethod());
-			if(("/login").equalsIgnoreCase(resourcePath) && httpServletRequest.getMethod().equals("POST")) {
-				InputStream is=request.getInputStream();
-				byte[] data=StreamUtils.copyToByteArray(is);
-				ByteArrayInputStream bais=new ByteArrayInputStream(data);
-				String body=IOUtils.toString(new BufferedReader(new InputStreamReader(bais)));
-				JSONParser jsonparser=new JSONParser();
-				JSONObject jsonObject=(JSONObject) jsonparser.parse(body);
-				String emailId=jsonObject.get("email").toString();
-				String password=null;
-				UsernamePasswordAuthenticationToken userNamePassAuthentication=new UsernamePasswordAuthenticationToken(emailId,password);
-				
-				Authentication authentication=authenticationManager.authenticate(userNamePassAuthentication);
-				System.out.println(authentication);
-				if(authentication==null && !authentication.isAuthenticated()) {
-					System.out.println("not authenticated");
-					SecurityContextHolder.clearContext();
-					
-                    
-					
-				}else {
-					System.out.println("here");
-					SecurityContextHolder.getContext().setAuthentication(authentication);
-				}
-				
-			}
-			chain.doFilter(httpServletRequest, httpServletResponse);
-		}catch(Exception e) {
-			SecurityContextHolder.clearContext();
-			e.printStackTrace();
-			chain.doFilter(httpServletRequest, httpServletResponse);
-		}
-		
-	}
+//	private static final long serialVersionUID=1L;
+//	
+//	private AuthenticationManager authenticationManager;
+//	
+//	public AuthenticationFilter(AuthenticationManager authenticationManager) {
+//		this.authenticationManager=authenticationManager;
+//	}
+//	@Override
+//	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+//			throws IOException, ServletException {
+//		HttpServletRequest httpServletRequest=(HttpServletRequest) request;
+//		HttpServletResponse httpServletResponse=(HttpServletResponse)response;
+//		String resourcePath=new UrlPathHelper().getPathWithinApplication(httpServletRequest);
+//		try {
+//			System.out.println("rp:"+resourcePath);
+//			System.out.println("method:"+httpServletRequest.getMethod());
+//			if(("/login").equalsIgnoreCase(resourcePath) && httpServletRequest.getMethod().equals("POST")) {
+//				System.out.println("inside");
+//				InputStream is=request.getInputStream();
+//				byte[] data=StreamUtils.copyToByteArray(is);
+//				ByteArrayInputStream bais=new ByteArrayInputStream(data);
+//				String body=IOUtils.toString(new BufferedReader(new InputStreamReader(bais)));
+//				JSONParser jsonparser=new JSONParser();
+//				JSONObject jsonObject=(JSONObject) jsonparser.parse(body);
+//				String emailId=jsonObject.get("email").toString();
+//				String password=null;
+//				UsernamePasswordAuthenticationToken userNamePassAuthentication=new UsernamePasswordAuthenticationToken(emailId,password);
+//				
+//				Authentication authentication=authenticationManager.authenticate(userNamePassAuthentication);
+//				System.out.println(authentication.getPrincipal().toString());
+//				if(authentication==null && !authentication.isAuthenticated()) {
+//					System.out.println("not authenticated");
+//					SecurityContextHolder.clearContext();
+//					
+//                    
+//					
+//				}else {
+//					System.out.println("here 11");
+//					SecurityContextHolder.getContext().setAuthentication(authentication);
+//				}
+//				
+//			}
+//			
+//		}catch(Exception e) {
+//			System.out.println("here 22");
+//			SecurityContextHolder.clearContext();
+//			e.printStackTrace();
+//			
+//		}
+//		chain.doFilter(httpServletRequest, httpServletResponse);
+//		
+//	}
 	
 
 }

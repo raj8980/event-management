@@ -115,8 +115,9 @@ public class UserRegistrationDataBean implements Serializable {
 		return "UserRegistrationDataBean [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", mobileNo=" + mobileNo + ", password=" + password + ", confirmPass=" + confirmPass + ", country="
 				+ country + ", interest=" + interest + ", orgName=" + orgName + ", address=" + address + ", state="
-				+ state + ", userTypeId=" + userTypeId + ", orgRegId=" + orgRegId + "]";
+				+ state + ", userTypeId=" + userTypeId + ", orgRegId=" + orgRegId + ", userId=" + userId + "]";
 	}
+	
 	
 	
 }

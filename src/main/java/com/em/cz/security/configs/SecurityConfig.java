@@ -1,5 +1,6 @@
 package com.em.cz.security.configs;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,42 +15,52 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.savedrequest.NullRequestCache;
 
+import com.em.cz.services.MyUserDetailService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	
+	@Autowired MyUserDetailService myUserDetailService;
 	
-	@Bean
-	public PasswordEncoder passwordEncoder()
-	{
-	    return new BCryptPasswordEncoder();
-	}
+	
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		System.out.println("heresdfs");
-		auth.authenticationProvider(customAuthenticationProvider());
+		auth.userDetailsService(myUserDetailService).passwordEncoder(passwordEncoder());
 	}
+
+//	@Override
+//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//		System.out.println("heresdfs");
+//		auth.authenticationProvider(customAuthenticationProvider());
+//	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors();
 		http.csrf().disable();
-		http.addFilterAfter(new AuthenticationFilter(authenticationManager()),BasicAuthenticationFilter.class);
+//		http.addFilterAfter(new AuthenticationFilter(authenticationManager()),BasicAuthenticationFilter.class);
 		http.authorizeRequests().antMatchers("/**").permitAll().anyRequest().authenticated()
 		.and().requestCache().requestCache(new NullRequestCache());
 	}
 	
 	
 	
-	@Bean
-	public AuthenticationProvider customAuthenticationProvider() {
-		return new CustomAuthenticationProvider();
-	}
-	
+//	@Bean
+//	public AuthenticationProvider customAuthenticationProvider() {
+//		return new CustomAuthenticationProvider();
+//	}
+//	
 	@Override
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 	
 }

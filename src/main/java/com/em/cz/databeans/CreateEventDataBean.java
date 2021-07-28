@@ -1,6 +1,6 @@
 package com.em.cz.databeans;
-public class createEventDataBean {  
-private String eventType;
+public class CreateEventDataBean {  
+	private String eventType;
 	private String eventTitle;
 	private String eventDesciption;
 	private String startDate;
@@ -14,6 +14,8 @@ private String eventType;
 	private String requirePreCondi;
 	private String preConditionType;
 	private String preConditionDtls;
+	private String eventRelated;
+	
 	public String getEventType() {
 		return eventType;
 	}
@@ -97,6 +99,21 @@ private String eventType;
 	}
 	public void setPreConditionDtls(String preConditionDtls) {
 		this.preConditionDtls = preConditionDtls;
+	}
+	public String getEventRelated() {
+		return eventRelated;
+	}
+	public void setEventRelated(String eventRelated) {
+		this.eventRelated = eventRelated;
+	}
+	@Override
+	public String toString() {
+		return "CreateEventDataBean [eventType=" + eventType + ", eventTitle=" + eventTitle + ", eventDesciption="
+				+ eventDesciption + ", startDate=" + startDate + ", endDate=" + endDate + ", startTime=" + startTime
+				+ ", endTime=" + endTime + ", accessType=" + accessType + ", requireParticipantFees="
+				+ requireParticipantFees + ", participantFees=" + participantFees + ", participantType="
+				+ participantType + ", requirePreCondi=" + requirePreCondi + ", preConditionType=" + preConditionType
+				+ ", preConditionDtls=" + preConditionDtls + ", eventRelated=" + eventRelated + "]";
 	}
 	
 }
